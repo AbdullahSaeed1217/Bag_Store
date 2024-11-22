@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+
+
+
+{% block title%} Home Page {% endblock title%}
+
+
+{% block content %}
+
+<h1>Your Cart</h1>
+
+{% if cart_items %}
+    <ul>
+        {% for item in cart_items %}
+            <li>
+                <P> {{item.id}}</P>
+                <button class="btn btn-danger remove-from-cart" data-product-id="{{ item.product.id }}">Remove</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+    <h3>Total Price: ${{ total_price }}</h3>
+    <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %}
+
+
+
+
+
+{% endblock content%}
+
+
+<script>
+    // Remove from Cart functionality
+    document.querySelectorAll('.remove-from-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = e.target.dataset.productId;
+            removeFromCart(productId);
+        });
+    });
+
+    function removeFromCart(productId) {
+        fetch('/remove-from-cart/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'product_id': productId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            location.reload(); // Reload the page to update the cart
+            console.log(data.message);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+
+
+
+
+
+
+
+
+    
+</body>
+</html>

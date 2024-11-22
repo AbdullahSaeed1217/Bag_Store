@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title%} Sam Shoes | {{product.title }} {% endblock title%}
+
+
+{%block content%}
+<style>
+  .hide{
+    display: none;
+  }
+  
+</style>
+<span hidden>
+  {% block cartCount %}   {{ cart_count }} {% endblock cartCount %}   
+
+</span> 
+
+  <div class="row  vh-100">
+  <div class="col-10">
+    <div class="card mb-3 border-0 " >
+      <div class="row g-0 offset-3">
+        <div class="col-md-4 offset-2">
+          {% if product.image.url is not None %}
+          <img src="{{product.image.url}}" class="img-fluid rounded-start shadow-lg" alt="{{product.title}}">
+          {% else %}
+          <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="">      
+          {% endif %}
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><b>{{product.title }}</b></h5>
+            <p class="card-text"> Color : {{product.color }}</p>
+            <p class="card-text">Size : {{product.size }}</p>
+            <p class="card-text">Price : <b> {{product.retail_price }} </b>$</p>
+            <button  class="btn btn-dark  mb-3 rounded-0 w-100" value="{{product.id}}" id="add-cart" onclick="showMessage()">Add to Cart</button> <span class="message hide"><b> {{product.title}} </b> added to cart successfully !</span>
+
+          <p class="card-text"> Description : <br> {{product.description }}</p>
+
+        </div>
+      </div>
+    </div>
+    </div>
+ 
+
+<script>
+  function showMessage(){
+    const message = document.querySelector('.message');
+    if(message.classList.contains("hide")){
+      message.classList.remove("hide");
+      setTimeout(() => {
+        message.classList.add('hide');
+      }, 1000);
+    }else{
+      message.classList.add("hide");
+    }
+  }
+  $(document).on('click','#add-cart',function(e){
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'cart_add' %}",
+      data: {
+          product_id: $('#add-cart').val(),
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          action:'post',
+      },
+      success:function(json){
+        console.log(json);
+      },
+      error:function (xhr,errmsg,err){
+
+      }
+    })
+  })
+</script>
+
+  
+{%endblock content%}

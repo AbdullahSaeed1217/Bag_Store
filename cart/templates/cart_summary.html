@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load cart_extras %}
+
+
+{% block title %}  Cart Summary  {% endblock title %}
+
+
+{% block content %}
+
+<!-- cart_summary.html -->
+
+  <div class="row mx-5 my-3  px-5">
+    <span hidden>
+        {% block cartCount %}   {{ cart_count }} {% endblock cartCount %}   
+      
+      </span>
+    
+    {% if cart_items %}
+        <table>
+            <thead>
+                <tr class="bg-secondary text-dark ">
+                    <th class="p-2 ">Product Name</th>
+                    <th class="p-2">Quantity</th>
+                    <th class="p-2">Price</th>
+                    <th class="p-2">Total Price</th>
+                    <th class="p-2">Actions</th>  <!-- Added Actions column for buttons -->
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}$</td>
+                        <td>{{ item.quantity|multiply:item.price }}$</td>
+
+                         <!-- Update Quantity Button -->
+                         <td>
+                          <form action="{% url 'cart_update' %}" method="POST">
+                              {% csrf_token %}
+                              <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                              <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                              <button type="submit" name="action" value="post" class="btn btn-success">Update</button>
+                          </form>
+
+                          <!-- Delete Item Button -->
+                          <form action="{% url 'cart_delete' %}" method="POST">
+                              {% csrf_token %}
+                              <input type="hidden" name="product_id" value="{{item.product_id}}">
+                              <button type="submit" name="action" value="post" class="btn btn-black">Delete</button>
+                          </form>
+                      </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class=" d-flex justify-content-center fs-1 text-secondary  p-5">Empty Cart!</p>
+    {% endif %}
+
+  </div>
+
+
+
+
+
+{% endblock content %}
+
+
