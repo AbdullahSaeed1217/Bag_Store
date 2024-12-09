@@ -8,9 +8,11 @@ pipeline {
 
     stages {
         stage('Checkout Code') {
-             git url: 'https://github.com/AbdullahSaeed1217/Bag_Store.git',
-        credentialsId: 'github-pat',
-        branch: 'main'
+            steps {
+                // Fetch code from GitHub repository
+                git branch: 'main', url: 'https://github.com/AbdullahSaeed1217/Bag_Store.git'
+            }
+        }
 
         stage('Setup Python Environment') {
             steps {
