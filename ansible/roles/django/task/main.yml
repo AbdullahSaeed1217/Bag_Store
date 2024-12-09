@@ -1,0 +1,14 @@
+- name: Build Docker Containers
+  community.docker.docker_compose:
+    project_src: "/home/devops/Bag_Store/Bag_Store_App"
+    state: present
+
+- name: Migrate Database
+  command: python manage.py migrate
+  args:
+    chdir: "/home/devops/Bag_Store/Bag_Store_App"
+  
+- name: Collect Static Files
+  command: python manage.py collectstatic --noinput
+  args:
+    chdir: "/home/devops/Bag_Store/Bag_Store_App"

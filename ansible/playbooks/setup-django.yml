@@ -1,0 +1,12 @@
+- name: Setup Django Application
+  hosts: localhost
+  tasks:
+    - name: Ensure Docker is running
+      service:
+        name: docker
+        state: started
+
+    - name: Build and Start Containers
+      community.docker.docker_compose:
+        project_src: "/home/devops/Bag_Store/Bag_Store_App"
+        state: present

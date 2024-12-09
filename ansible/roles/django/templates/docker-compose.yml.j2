@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: /home/devops/Bag_Store/Bag_Store_App  # Adjusted to the absolute path where Dockerfile is located
+      dockerfile: Dockerfile           # Dockerfile is correctly referenced
+    container_name: django_app
+    command: python manage.py runserver 0.0.0.0:3000  # Default Django port
+    ports:
+      - "3000:3000"                    # Django default port mapping
+    environment:
+      - DEBUG=True
+
+  db:
+    image: postgres:14
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: admin              # Replace with your desired database username
+      POSTGRES_PASSWORD: admin@123$        # Replace with your desired database password
+      POSTGRES_DB: bag_store_db        # Replace with your desired database name
+    ports:
+      - "5432:5432"                     # Default PostgreSQL port mapping

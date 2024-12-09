@@ -1,0 +1,5 @@
+app_name: "bag_e_store"
+django_port: 3000
+database_name: "django_db"
+database_user: "django"
+database_password: "django123"
