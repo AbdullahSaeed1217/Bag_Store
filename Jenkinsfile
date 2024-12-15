@@ -11,9 +11,6 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/AbdullahSaeed1217/Bag_Store.git'
             }
-                
-
-            }
         }
 
         stage('Setup Python Environment') {
