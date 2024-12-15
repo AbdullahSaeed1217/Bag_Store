@@ -9,8 +9,10 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                // Fetch code from GitHub repository
                 git branch: 'main', url: 'https://github.com/AbdullahSaeed1217/Bag_Store.git'
+            }
+                
+
             }
         }
 
