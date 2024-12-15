@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        KUBE_CONFIG_PATH = "home/devops/Bag_Store/Bag_Store_App/k8s" // Path to your kubeconfig file
-        TF_VAR_kube_config_path = "home/devops/Bag_Store/Bag_Store_App/k8s" // Path for Terraform to access kubeconfig
-    }
-
     stages {
         stage('Checkout Code') {
             steps {
@@ -17,11 +12,11 @@ pipeline {
             steps {
                 script {
                     // Set up a Python virtual environment and install dependencies
-                    sh 'bash -c
-                    " python3 -m venv venv
+                    sh '''
+                    python3 -m venv venv
                     source venv/bin/activate
-                    pip install -r requirements.txt"
-                    '
+                    pip install -r requirements.txt
+                    '''
                 }
             }
         }
