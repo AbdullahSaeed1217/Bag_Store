@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                // Checkout the Django project code from GitHub
+                // Checkout the Django project code from GitHub (public repository)
                 git branch: 'main', url: 'https://github.com/AbdullahSaeed1217/Ecommerce_Store.git'
             }
         }
