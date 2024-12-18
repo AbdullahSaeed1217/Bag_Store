@@ -18,6 +18,7 @@ pipeline {
             steps {
                 script {
                     sh '''
+                    /bin/bash
                     python3 -m venv ${PYTHON_ENV}
                     source ${PYTHON_ENV}/bin/activate
                     pip install --upgrade pip
