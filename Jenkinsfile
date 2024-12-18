@@ -18,9 +18,8 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    /bin/bash
-                    python3 -m venv ${PYTHON_ENV}
-                    source ${PYTHON_ENV}/bin/activate
+                    /bin/bash -c "python3 -m venv venv
+                    source venv/bin/activate"
                     pip install --upgrade pip
                     pip install -r requirements.txt
                     '''
